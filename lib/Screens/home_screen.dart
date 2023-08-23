@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:simple_todo_app/Model/todo.dart';
 
 import '../Constants/colors.dart';
+import '../Model/todo.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,13 +29,17 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           Container(
-            color: Colors.red,
-            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+            color: Colors.blue,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            child: Column(
+              children: [
+                searchBox(),
+              ],
+            ),
           ),
         ],
       ),
     );
-
   }
 
   AppBar _buildAppBar() {
@@ -61,6 +65,52 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List<ToDo> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = todosList;
+    } else {
+      results = todosList
+          .where((item) => item.todoText!
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundToDo = results;
+    });
+  }
+
+  Widget searchBox() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: TextField(
+        onChanged: (value) => _runFilter(value),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(0),
+          prefixIcon: Icon(
+            Icons.search,
+            color: tdBlack,
+            size: 20,
+          ),
+          prefixIconConstraints: BoxConstraints(
+            maxHeight: 20,
+            minWidth: 25,
+          ),
+          border: InputBorder.none,
+          hintText: 'Search',
+          hintStyle: TextStyle(
+            color: tdGrey,
+          ),
+        ),
       ),
     );
   }
