@@ -34,6 +34,24 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 searchBox(),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Container(
+
+                        margin: EdgeInsets.only(top: 50, bottom: 20),
+                       // color: Colors.black,
+                        child: Text(
+                          'All tasks ToDo',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
